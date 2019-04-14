@@ -4,21 +4,18 @@ var isMobile = /Mobi/.test(navigator.userAgent);
 		}
 	
         // ----- Initialize Map Variable -----
-
         var map = L.map('map', {
             center: [55.949512, -3.191915], //initial position (Edinburgh)
             zoom: 9, //initial zoom level
 			doubleClickZoom: false
         });
+		//attempt to approximate user position based on ip address and relocate map center as soon as result comes back from API. Code keeps running async
+		setMapToUserPos();
+		
+		
 		//map.doubleClickZoom.disable(); 
-		
-        //attempt to approximate user position based on ip address and relocate map center as soon as result comes back from API. Code keeps running async
-        setMapToUserPos();
-		
-			
 		var geocodeService = L.esri.Geocoding.geocodeService();
-		
-
+       
         // ----- fetching map tiles from OSM in this case. "Design" of the map can be changed here. Requires attribution. -----
 
         //Standard OSM Map Style:
@@ -37,22 +34,20 @@ var isMobile = /Mobi/.test(navigator.userAgent);
         //Set Click listener for Map
         map.on('click', onMapClick);
 		
-		//am i currently searching routes? ignore marker clicks based on this
+		//saving when currently searching for routes. ignore marker clicks based on this
 		var calculating = false;
 		
-		//Main marker holding array
-		var markers = [];
-		//additional to markers.length so there is no weirdness when deleting markers
-		//markerCount never decreases and is used for naming
+		
+		//markerCount never decreases and is used for naming additional to markers.length so there is no weirdness when deleting markers
 		var markerCount = 0;
+		var markers = []; //Main marker holding array
 		var routes = []; //holds array of routes for each marker
 		
-		let warned = false;
+		let warned = false; //used to save if the user has had a alert after placing too many markers so it only shows once
 		let MARKERLIMIT = 20;
 		
-		//Create initial Athos Code template
+		//Create the initial Athos Code template based on the empty matrix
 		createAthosCode()
-		
 		
         function onMapClick(e) {
 		
@@ -67,34 +62,33 @@ var isMobile = /Mobi/.test(navigator.userAgent);
 				return;
 			}
 			
-			//Use mouse style to indicate no more markers can be placed
+			//Use mouse style to indicate no more markers can be placed until this process is finished
 			document.getElementById("map").style.cursor = "progress";
 			
-			//Create new marker with onClickListener that will remove it again
+			//turn off listener until success is verified
+			map.off('click', onMapClick);
+									
+			document.getElementById("saveMatrix").disabled = true; //disable download button
+			document.getElementById("createAthos").disabled = true; //disable code generation button
+			
+			//Create new marker with its own onClickListener that will remove it again
 			let marker = L.marker([e.latlng.lat, e.latlng.lng],
 			{      
 				  draggable: false
 			}).addTo(map);
-			
 			markerCount++;
-			
 			//Remove marker and its routes on click
 			marker.on('click', function(event){
 				if(calculating){
-					return;
+					return; //do nothing while on route searching to prevent bugs
 				}
 			
 				let marker = event.target;
 				console.log("You clicked on a marker to remove it");
 
 				let indexOfMarker = markers.indexOf(marker);
-				
-				console.log("index " + indexOfMarker);
-				console.log("routes " + routes[indexOfMarker].length);
-				
 				let markerRoutes = routes[indexOfMarker]; 
 				
-
 				//delete all routes containing this markers latLng as a waypoint
 				for(let i = 0; i<routes.length;i++){
 					let markerRoutes = routes[i];
@@ -104,15 +98,13 @@ var isMobile = /Mobi/.test(navigator.userAgent);
 						for(let k = 0; k < router.getWaypoints().length; k++){
 							console.log(k);
 							if(router.getWaypoints()[k].latLng != null && router.getWaypoints()[k].latLng.lng == marker.getLatLng().lng && router.getWaypoints()[k].latLng.lat == marker.getLatLng().lat){
-								router.setWaypoints([]);
+								router.setWaypoints([]); //remove route that is connected to that marker
 							}
 						}
 					}
 				}
-
 				map.removeLayer(marker);
 				removeFromMatrix(marker);
-				
 			});
 			
 			//Add a popup so on mouseover users can see what node it is representing
@@ -123,23 +115,15 @@ var isMobile = /Mobi/.test(navigator.userAgent);
 			marker.on('mouseout', function (e) {
 				this.closePopup();
 			});
-						
-			//turn off listener until success is verified
-			map.off('click', onMapClick);
-			document.getElementById("saveMatrix").disabled = true;
-			document.getElementById("createAthos").disabled = true;
 			
 			//check for errors after timout. Depends on number of nodes. No new nodes can be created in that period. 
 			calculating = true;
-			let timeout = 2000 + (1 + markers.length) * 250;
+			let timeout = 2000 + (1 + markers.length) * 250; //some stupid way to set the timeout seconds
 			setTimeout(function() { 
-					nodeAddingSuccessCheck(marker); 
+					nodeAddingSuccessCheck(marker); //after timeout check if every route was found successfully without relying on any error responses
 				}, (timeout));
-
 			
-			
-
-			
+			//save progress: will be revoked if success check fails
 			
 			//save in array for later
 			markers.push(marker);
@@ -148,13 +132,12 @@ var isMobile = /Mobi/.test(navigator.userAgent);
 			map.addLayer(marker);	
 			
 			//Add marker to matrix
-			addToMatrix(marker);
-			
-			
-						
+			addToMatrix(marker);			
         }
 		
 		
+		
+		//add marker information to the html table matrix
 		function addToMatrix(newMarker) {
 		
 			var name = "n" + (markerCount);
@@ -271,10 +254,8 @@ var isMobile = /Mobi/.test(navigator.userAgent);
 		
 		//this method will return "Calculating". As soon as the route's distance is calculated, it will update the field at (x,y) with the distance.
 		//this method returns "Calculating" [i]instantly[/i] without waiting for the calculation to take place, instead the route distance is handeled in a callback method.
-		
 		var rainbow = ['#FF0000', '#FF7F00','#FFFF00','#00FF00','#0000FF','#8B00FF']; //color codes for each new line
 		var wa_routers = [] //hold all current routes to be able to remove them on error. cleared on every new node success.
-		
 		function nodeDistance(marker1, marker2, matrixX, matrixY){
 			if(marker1 === marker2){
 				return 0;
