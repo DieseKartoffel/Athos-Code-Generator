@@ -36,3 +36,4 @@ To host this project yourself, copy the project files on your webserver and inst
 * This project was done for a dissertation at the Edinburgh Napier University
 * Supervisor: Dr. Neil Urquhart
 * Read more about the Athos DSL here: https://www.napier.ac.uk/~/media/worktribe/output-1148980/a-domain-specific-language-for-routing-problems.pdf
+* Find more Athos related projects here: http://athos.napier.ac.uk
