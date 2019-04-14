@@ -3,7 +3,7 @@ A Web page that allows users to create Graph descriptions for the Athos DSL dyna
 
 ## Getting Started
 
-Visit http://athos.napier.ac.uk/generator to use this tool on our server.
+Visit http://athos.napier.ac.uk/generator to use this tool instantly.
 
 ### Run Locally
 
