@@ -149,6 +149,7 @@
 					name = name + "_unkown";
 					replaceValue(position, 0, name);
 					replaceValue(0, position, name);
+					return;
 				}
 				console.log(JSON.stringify(result));
 				var subregion = result.address.Subregion;
