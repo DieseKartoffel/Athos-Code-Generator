@@ -118,7 +118,7 @@
 			
 			//check for errors after timout. Depends on number of nodes. No new nodes can be created in that period. 
 			calculating = true;
-			let timeout = 2000 + (1 + markers.length) * 250; //some stupid way to set the timeout seconds
+			let timeout = 2000 + (1 + markers.length) * 250; //some stupid way to set the timeout seconds based on number of routes that need to be computed
 			setTimeout(function() { 
 					nodeAddingSuccessCheck(marker); //after timeout check if every route was found successfully without relying on any error responses
 				}, (timeout));
