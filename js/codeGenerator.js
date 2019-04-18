@@ -1,4 +1,4 @@
-var isMobile = /Mobi/.test(navigator.userAgent);
+		var isMobile = /Mobi/.test(navigator.userAgent);
 		if (isMobile) {
 			document.getElementById("container").style.margin = "0";
 		}
