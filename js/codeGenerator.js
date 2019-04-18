@@ -19,19 +19,18 @@
         // ----- fetching map tiles from OSM in this case. "Design" of the map can be changed here. Requires attribution. -----
 
         //Standard OSM Map Style:
-        
+        /*
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        
+        */
 
         //OpenMapSurfer.Roads Style:
-		/*
         L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: 'Routing with <a href="http://www.liedman.net/leaflet-routsing-machine/">LRM</a> and <a href="http://project-osrm.org/">OSRM</a> | Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group</a> | Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-		*/
+		
         //Set Click listener for Map
         map.on('click', onMapClick);
 		
