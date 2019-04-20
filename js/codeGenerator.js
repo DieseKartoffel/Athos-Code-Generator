@@ -426,7 +426,7 @@
 			
 			var csv = $("table").table2CSV(); //Original at https://github.com/rubo77/table2CSV, However Code was edited by me to only contain necessary .csv creation!
 			
-			//replace table with formated values
+			//replace table with old formated values
 			let k = 0;
 			for (var i = 1, row; row = table.rows[i]; i++) {
 			   for (var j = 1, col; col = row.cells[j]; j++) {
