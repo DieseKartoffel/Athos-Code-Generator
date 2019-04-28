@@ -19,7 +19,9 @@ To host this project yourself, copy the project files on your webserver and inst
 
 - Place the project files in that folder, make sure the html is called index.html if you are using the standard xampp configuration
 
-- Visit your domain and enjoy
+- If you're hosting other services already, set up a new Virtual Host for your domain/port or place it in a subfolder of an existing one
+
+- Reload Apache config
 
 ## Built With
 
