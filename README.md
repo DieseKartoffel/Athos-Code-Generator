@@ -21,7 +21,7 @@ To host this project yourself, copy the project files on your webserver and inst
 
 - If you're hosting other services already, set up a new Virtual Host for a new domain/port or place it in a subfolder of an existing one
 
-- Reload Apache config
+- Reload Apache config and visit your server address
 
 ## Built With
 
