@@ -1,5 +1,7 @@
 # Athos-Code-Generator
-A Web page that allows users to create Graph descriptions for the Athos DSL dynamically
+A Web page that allows users to create Graph descriptions for the Athos DSL dynamically. 
+
+The Athos DSL aims to solve Vehicle Routing- and similar problems but relied on users to define the graph structure by writing detailed code manually. This tool allows the navigation on a world map and interacting with it allows to freely choose and automatically connect locations with each other. The resulting graph is represented in a matrix table and can be turned into an Athos syntax graph description with the click of the button. The code can then be used as a template for future work.
 
 ## Getting Started
 
