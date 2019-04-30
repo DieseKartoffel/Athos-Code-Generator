@@ -1,11 +1,11 @@
 # Athos-Code-Generator
-A Web page that allows users to create Graph descriptions for the Athos DSL dynamically. 
+A Web page that allows users to create Graph descriptions for the Athos Domain Specific Programming Language dynamically. 
 
-The Athos DSL aims to solve Vehicle Routing- and similar problems but relied on users to define the graph structure by writing detailed code manually. This tool allows the navigation on a world map and interacting with it allows to freely choose and automatically connect locations with each other. The resulting graph is represented in a matrix table and can be turned into an Athos syntax graph description with the click of the button. The code can then be used as a template for future work.
+The Athos DSL allows to easily solve Vehicle Routing- and similar problems but relies on users to define the graph structure by writing detailed code manually. This tool allows the navigation on a world map and interacting with it allows to freely choose and automatically connect locations with each other. The resulting graph is represented in a matrix table and can be turned into an Athos syntax graph description with the click of the button. The code can then be used as a template for future work.
 
 ## Getting Started
 
-Visit http://athos.napier.ac.uk/generator to use this tool instantly.
+Visit http://athos.napier.ac.uk/generator to play with this tool.
 
 ### Run Locally
 
@@ -30,6 +30,8 @@ To host this project yourself, copy the project files on your webserver and inst
 * [Leaflet](https://leafletjs.com/) - The Map Framework used
 * [Open Streep Map](https://www.openstreetmap.org/) - Map Data 
 * [Open Source Routing Machine](http://project-osrm.org/) - Used to generate Routes between nodes
+
+- The external open source services can be hosted on your private server as well!
 
 ## Authors
 
