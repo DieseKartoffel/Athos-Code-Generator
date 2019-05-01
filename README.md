@@ -9,7 +9,7 @@ Visit http://athos.napier.ac.uk/generator to play with this tool.
 
 ### Run Locally
 
-To run the Code Generator tool locally, simply download the project files and open the index.html with your favorite web browser.
+To run the Code Generator tool locally, simply download the project files and open the index.html with your favorite web browser. It will still rely on an internet connection though.
 
 ### Hosting this project yourself
 
